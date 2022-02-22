@@ -1,5 +1,6 @@
 package com.example.composerest.di
 
+import com.example.composerest.datasource.RestDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,5 +27,10 @@ class DataSourceModule {
             .baseUrl(baseUrl)
             .build()
     }
+
+    @Singleton
+    @Provides
+    fun restDataSource(retrofit: Retrofit) : RestDataSource =
+        retrofit.create(RestDataSource::class.java)
 
 }
