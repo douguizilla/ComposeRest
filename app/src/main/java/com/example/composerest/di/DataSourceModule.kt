@@ -18,6 +18,8 @@ class DataSourceModule {
     @Named("BaseUrl")
     fun provideBaseUrl() = "https://randomuser.me/api/"
 
+    @Singleton
+    @Provides
     fun provideRetrofit(@Named("BaseUrl") baseUrl: String) : Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
