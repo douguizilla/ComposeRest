@@ -12,12 +12,11 @@ class UserRepositoryImp @Inject constructor(
     private val dataSource: RestDataSource
 ) : UserRepository {
 
-    override suspend fun getNewUser() : User {
+    override suspend fun getNewUser(): User {
         val name = dataSource.getUserName().results[0].name!!
         val location = dataSource.getUserName().results[0].location!!
         val picture = dataSource.getUserName().results[0].picture!!
-        val user = User(name.first, name.last, location.city, picture.thumbnail)
-        return user
+        return User(name.first, name.last, location.city, picture.thumbnail)
     }
 
 }
