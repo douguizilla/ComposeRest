@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.composerest.datasource.DbDataSource
 import com.example.composerest.datasource.RestDataSource
+import com.example.composerest.model.UserDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,5 +45,9 @@ class DataSourceModule {
             .fallbackToDestructiveMigration()
             .build()
     }
+
+    @Singleton
+    @Provides
+    fun userDao(db: DbDataSource) : UserDao = db.userDao()
 
 }
