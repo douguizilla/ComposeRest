@@ -4,6 +4,7 @@ import com.example.composerest.datasource.RestDataSource
 import com.example.composerest.model.User
 import com.example.composerest.repository.UserRepository
 import com.example.composerest.repository.UserRepositoryImp
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +18,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
 
-    @Singleton
+    @Binds
     @Provides
     abstract fun userRepository(repo: UserRepositoryImp) : UserRepository
 
