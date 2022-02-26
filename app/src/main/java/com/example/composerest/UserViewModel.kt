@@ -27,7 +27,7 @@ class UserViewModel @Inject constructor(
 
     val isLoading : LiveData<Boolean> get() = _isLoading
 
-    fun addItem(){
+    fun addUser(){
         if(_isLoading.value == false){
             viewModelScope.launch(Dispatchers.IO) {
                 _isLoading.postValue(true)
@@ -37,7 +37,7 @@ class UserViewModel @Inject constructor(
         }
     }
 
-    fun deleteItem(toDelete: User){
+    fun deleteUser(toDelete: User){
         viewModelScope.launch(Dispatchers.IO) {
             userRepository.deleteUser(toDelete)
         }
