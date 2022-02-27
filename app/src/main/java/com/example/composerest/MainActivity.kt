@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MyApp()
+                    MyApp1()
                 }
             }
         }
@@ -33,8 +33,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyApp(
+fun MyApp1(
     viewModel: UserViewModel = hiltViewModel()
+) {
+    MyApp(onAddClick = {
+        viewModel.addUser()
+    })
+}
+
+@Composable
+fun MyApp(
+    onAddClick : (() -> Unit)? = null
 ) {
     Scaffold(
         topBar = {
@@ -42,7 +51,7 @@ fun MyApp(
                 title = { Text("Compose Rest + Room")},
                 actions = {
                     IconButton(onClick = {
-                        viewModel.addUser()
+                        onAddClick?.invoke()
                     }) {
                         Icon(imageVector = Icons.Filled.Add, contentDescription = "Add")
                     }
@@ -58,6 +67,6 @@ fun MyApp(
 @Composable
 fun DefaultPreview() {
     ComposeRestTheme {
-        MyApp()
+        MyApp(onAddClick = null)
     }
 }
