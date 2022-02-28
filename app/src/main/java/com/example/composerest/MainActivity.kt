@@ -4,13 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.composerest.model.User
 import com.example.composerest.ui.theme.ComposeRestTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,16 +38,26 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp1(
-    viewModel: UserViewModel = hiltViewModel()
+    viewModel: UserViewModel = hiltViewModel(),
 ) {
-    MyApp(onAddClick = {
+
+    val users by viewModel.users.observeAsState(arrayListOf())
+    val isLoading by viewModel.isLoading.observeAsState(false)
+
+    MyApp(
+        onAddClick = {
         viewModel.addUser()
-    })
+        },
+        user = users,
+        isLoading = isLoading
+    )
 }
 
 @Composable
 fun MyApp(
-    onAddClick : (() -> Unit)? = null
+    onAddClick : (() -> Unit)? = null,
+    user: List<User>,
+    isLoading : Boolean
 ) {
     Scaffold(
         topBar = {
@@ -67,6 +81,6 @@ fun MyApp(
 @Composable
 fun DefaultPreview() {
     ComposeRestTheme {
-        MyApp(onAddClick = null)
+        MyApp(onAddClick = null, user = emptyList(), isLoading = false)
     }
 }
