@@ -58,6 +58,9 @@ fun MyApp1(
         onAddClick = {
             viewModel.addUser()
         },
+        onDeleteClick = {
+            viewModel.deleteUser(it)
+        },
         users = users,
         isLoading = isLoading
     )
@@ -66,6 +69,7 @@ fun MyApp1(
 @Composable
 fun MyApp(
     onAddClick: (() -> Unit)? = null,
+    onDeleteClick: ((toDelete: User) -> Unit)? = null,
     users: List<User>,
     isLoading: Boolean
 ) {
@@ -124,7 +128,7 @@ fun MyApp(
                         Spacer()
 
                         IconButton(onClick = {
-
+                            onDeleteClick?.invoke(user)
                         }) {
                             Icon(Icons.Filled.Delete, "Remove")
                         }
