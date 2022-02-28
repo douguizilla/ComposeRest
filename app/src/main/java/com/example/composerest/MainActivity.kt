@@ -10,19 +10,23 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberImagePainter
 import com.example.composerest.model.User
 import com.example.composerest.ui.theme.ComposeRestTheme
 import com.valentinilk.shimmer.shimmer
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.compose.foundation.Image
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -89,6 +93,43 @@ fun MyApp(
                     if (auxIndex == 0)
                         return@items LoadingCard()
                     auxIndex--
+                }
+                val user = users[auxIndex]
+                Card(
+                    shape = RoundedCornerShape(8.dp),
+                    elevation = 1.dp,
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                        .fillMaxWidth()
+                ) {
+                    Row(modifier = Modifier.padding(8.dp)) {
+                        Image(
+                            modifier = Modifier.size(50.dp),
+                            painter = rememberImagePainter(
+                                data = user.thumbnail,
+                                builder = {
+
+                                }
+                            ), contentDescription = null, contentScale = ContentScale.FillHeight)
+
+                        Spacer()
+
+                        Column(
+                            Modifier.weight(1f)
+                        ) {
+                            Text("${user.name} ${user.lasName}")
+                            Text("${user.city}")
+                        }
+
+                        Spacer()
+
+                        IconButton(onClick = {
+
+                        }) {
+                            Icon(Icons.Filled.Delete, "Remove")
+                        }
+
+                    }
                 }
             }
         }
