@@ -48,7 +48,7 @@ fun MyApp1(
         onAddClick = {
         viewModel.addUser()
         },
-        user = users,
+        users = users,
         isLoading = isLoading
     )
 }
@@ -56,7 +56,7 @@ fun MyApp1(
 @Composable
 fun MyApp(
     onAddClick : (() -> Unit)? = null,
-    user: List<User>,
+    users: List<User>,
     isLoading : Boolean
 ) {
     Scaffold(
@@ -73,7 +73,19 @@ fun MyApp(
             )
         }
     ) {
+        LazyColumn{
+            var itemCount = users.size
+            if(isLoading) itemCount ++
 
+            items(count = itemCount){ index ->
+                var auxIndex = index
+                if(isLoading){
+                    if(auxIndex == 0)
+                        return@items Text(text = "IsLoading")
+                    auxIndex--
+                }
+            }
+        }
     }
 }
 
@@ -81,6 +93,6 @@ fun MyApp(
 @Composable
 fun DefaultPreview() {
     ComposeRestTheme {
-        MyApp(onAddClick = null, user = emptyList(), isLoading = false)
+        MyApp(onAddClick = null, users = emptyList(), isLoading = false)
     }
 }
